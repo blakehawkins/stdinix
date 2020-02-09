@@ -1,0 +1,35 @@
+Exposes a utility function to reduce boilerplate for reading from stdin.
+
+# Yes
+
+```rust
+use std::io::Result;
+use stdinix::stdinix;
+
+fn main() -> Result<()> {
+    stdinix(|buf| {
+        println!("{}", buf.rev().collect());
+
+        Ok(())
+    })
+}
+```
+
+
+# No
+
+```rust
+use std::io::Result;
+
+fn main() -> Result<()> {
+    let mut buf = String::new();
+    while let Ok(true) = {
+        buf.clear();
+        std::io::stdin().read_line(&mut buf).map(|l| l > 0)
+    } {
+        println!("{}", buf.rev().collect());
+    }
+
+    Ok(())
+}
+```
