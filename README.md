@@ -33,3 +33,24 @@ fn main() -> Result<()> {
     Ok(())
 }
 ```
+
+# Async
+
+```rust
+use std::io::Result;
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let context = vec![0, 3];
+
+    astdinix(move |line| {
+        let context = context.clone();
+
+        async move {
+            println!("{} {}", line.bytes().nth(context[0]).unwrap(), line.bytes().nth(context[1]).unwrap());
+            Ok(())
+        }
+    })
+    .await
+}
+```
