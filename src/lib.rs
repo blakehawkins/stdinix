@@ -1,9 +1,8 @@
 use std::future::Future;
-use std::io::Result;
 
-pub fn stdinix<F>(mut cl: F) -> Result<()>
+pub fn stdinix<F>(mut cl: F) -> eyre::Result<()>
 where
-    F: FnMut(&str) -> Result<()>,
+    F: FnMut(&str) -> eyre::Result<()>,
 {
     let mut buf = String::new();
     while let Ok(true) = {
@@ -16,9 +15,9 @@ where
     Ok(())
 }
 
-pub async fn astdinix<F, Fut>(mut cl: F) -> Result<()>
+pub async fn astdinix<F, Fut>(mut cl: F) -> eyre::Result<()>
 where
-    Fut: Future<Output = Result<()>>,
+    Fut: Future<Output = eyre::Result<()>>,
     F: FnMut(String) -> Fut,
 {
     let mut buf = String::new();
